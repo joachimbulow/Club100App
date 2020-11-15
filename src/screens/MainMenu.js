@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
     StyleSheet,
     Text,
@@ -11,7 +11,12 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import authHandler from '../utils/authenticationHandler.js'
 
+
+import { Player } from '@react-native-community/audio-toolkit';
+
 function MainMenu(props) {
+
+    const notificationPlayerRef = useRef(new Player("../assets/soundfiles/example.mp3", { autoDestroy: false, mixWithOthers: true }))
 
     return (
         <>
@@ -34,7 +39,7 @@ function MainMenu(props) {
                             Play
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => readTokenObject()}>
+                    <TouchableOpacity style={styles.button} onPress={() => notificationPlayerRef.current.play()}>
                         <Text style={styles.buttonText}>
                             How to play
                         </Text>

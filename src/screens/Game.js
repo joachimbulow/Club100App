@@ -19,10 +19,11 @@ import AnimatedProgressWheel from 'react-native-progress-wheel';
 import TextTicker from 'react-native-text-ticker';
 import authHandler from '../utils/authenticationHandler';
 import spotifyRequestHandler from '../utils/spotifyRequestHandler';
+import { Player } from '@react-native-community/audio-toolkit';
 
 function Game(props) {
 
-
+    const notificationPlayerRef = useRef(new Player("../../assets/soundfiles/notification1.mp3", { autoDestroy: false, mixWithOthers: true }))
     const roundTimeRef = useRef(props.route.params.difficulty);
     const minefieldRef = useRef(props.route.params.minefield);
     const shuffleMusicRef = useRef(props.route.params.shuffleMusic);
@@ -48,31 +49,20 @@ function Game(props) {
             headerLeft: () => (
                 <Button onPress={() => {
                     Alert.alert(
-                        "Quit game",
-                        "Are you sure?",
-                        [
-                            {
-                                text: "Cancel",
-                                style: "cancel"
-                            },
-                            {
-                                text: "Quit", onPress: () => {
-                                    clearInterval(gameInterval);
-                                    props.navigation.navigate('MainMenu')
-                                }
-                            }
-                        ],
+                        "Quit game", "Are you sure?",
+                        [{ text: "Cancel", style: "cancel" }, { text: "Quit", onPress: () => { clearInterval(gameInterval); props.navigation.navigate('MainMenu') } }],
                         { cancelable: false }
                     );
-
                 }
                 } title="Quit" color="black"></Button>
             )
         });
+        notificationPlayerRef.current.prepare();
     }, [])
 
     useEffect(() => {
         if (timeLeft <= 0) {
+            notificationPlayerRef.current.play()
             setTimeLeft(props.route.params.difficulty)
             setRound(currentRound => currentRound + 1)
             spotifyQueueAndPlayNextSong();
