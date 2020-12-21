@@ -13,7 +13,7 @@ import storageHandler from '../utils/asyncStorageHandler.js'
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function MainMenu(props) {
+function Authorization(props) {
 
     const [hasToken, setHasToken] = useState(false)
     const [tokenUserDisplayName, setTokenUserDisplayName] = useState(null)
@@ -169,4 +169,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default MainMenu;
+export default Authorization;

@@ -46,6 +46,11 @@ class SpotifyRequestHandler {
         return axios.get('https://api.spotify.com/v1/me/player', { headers: { "Authorization": "Bearer " + tokenObject.accessToken } })
     }
 
+    async getUserProfile() {
+        let tokenObject = await this.retrieveValidatedAccessToken();
+        return axios.get('https://api.spotify.com/v1/me', { headers: { "Authorization": "Bearer " + tokenObject.accessToken } })
+    }
+
 
     //Token handling 
     //TODO: move to auth handler

@@ -19,11 +19,11 @@ import AnimatedProgressWheel from 'react-native-progress-wheel';
 import TextTicker from 'react-native-text-ticker';
 import authHandler from '../utils/authenticationHandler';
 import spotifyRequestHandler from '../utils/spotifyRequestHandler';
-import { Player } from '@react-native-community/audio-toolkit';
+import BackgroundTimer from 'react-native-background-timer';
+import Sound from 'react-native-sound';
 
 function Game(props) {
 
-    const notificationPlayerRef = useRef(new Player("../../assets/soundfiles/notification1.mp3", { autoDestroy: false, mixWithOthers: true }))
     const roundTimeRef = useRef(props.route.params.difficulty);
     const minefieldRef = useRef(props.route.params.minefield);
     const shuffleMusicRef = useRef(props.route.params.shuffleMusic);
@@ -39,33 +39,45 @@ function Game(props) {
 
     let beerConsumed = (round * 2) - 2;
 
+    var notificationSound = useRef(undefined);
 
-    //Reference point for cleanup
-    var gameInterval;
 
     useEffect(() => {
+        //ComponentDidMount
+
+        //Initializing notificaiton sound
+        Sound.setCategory('Playback');
+        notificationSound.current = new Sound('notification.mp3', Sound.MAIN_BUNDLE, (error) => {
+            if (error) { console.log('Error loading notification sound'); return; }
+        });
+
         initializeGame();
         props.navigation.setOptions({
             headerLeft: () => (
                 <Button onPress={() => {
                     Alert.alert(
                         "Quit game", "Are you sure?",
-                        [{ text: "Cancel", style: "cancel" }, { text: "Quit", onPress: () => { clearInterval(gameInterval); props.navigation.navigate('MainMenu') } }],
+                        [{ text: "Cancel", style: "cancel" }, { text: "Quit", onPress: () => { BackgroundTimer.stopBackgroundTimer(); props.navigation.navigate('MainMenu') } }],
                         { cancelable: false }
                     );
                 }
                 } title="Quit" color="black"></Button>
             )
         });
-        notificationPlayerRef.current.prepare();
+
+        //ComponentWillUnmount
+        return () => {
+            BackgroundTimer.stopBackgroundTimer();
+            notificationSound.current.release();
+        }
     }, [])
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            notificationPlayerRef.current.play()
             setTimeLeft(props.route.params.difficulty)
             setRound(currentRound => currentRound + 1)
             spotifyQueueAndPlayNextSong();
+            notificationSound.current.play((success) => { })
         }
 
     }, [timeLeft]);
@@ -74,8 +86,6 @@ function Game(props) {
     async function initializeGame() {
         spotifyRequestHandler.getPlaylistContent(props.route.params.playlistUri)
             .then(async (result) => {
-
-                //Shuffle playlist?
                 let playlistContent = result.data.items
                 if (shuffleMusicRef.current) {
                     playlistContent.sort(() => Math.random() - 0.5)
@@ -102,7 +112,7 @@ function Game(props) {
     }
 
     function startInterval() {
-        gameInterval = setInterval(() => {
+        BackgroundTimer.runBackgroundTimer(() => {
             gameStep()
         }, 1000)
     }
