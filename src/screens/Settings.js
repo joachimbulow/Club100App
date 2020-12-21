@@ -15,7 +15,7 @@ import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function Settings(props) {
-    const [playlistUri, setPlaylist] = useState(props.route.params.playlistUri);
+    const [playlistUri] = useState(props.route.params.playlistUri);
     const [difficulty, setDifficulty] = useState(60);
     const [minefield, setMinefield] = useState(false);
     const [shuffleMusic, setShuffleMusic] = useState(false);
@@ -109,7 +109,7 @@ function Settings(props) {
                     </View>
                 </View>
                 <View style={styles.buttonView}>
-                    <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('SoundRecorder',
+                    <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('SettingsConfirm',
                         {
                             playlistUri: playlistUri,
                             difficulty: difficulty,

@@ -14,9 +14,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MainMenu from './src/screens/MainMenu.js'
 import PlaylistPicker from './src/screens/PlaylistPicker.js'
 import Settings from './src/screens/Settings.js'
-import SoundRecorder from './src/screens/SoundRecorder.js'
+import SettingsConfirm from './src/screens/SettingsConfirm.js'
 import Game from './src/screens/Game.js'
-import Authorization from './src/screens/authorizationScreen.js'
+import Authorization from './src/screens/Authorization.js'
+import HowToPlay from './src/screens/HowToPlay.js'
+import About from './src/screens/About.js'
 
 const App: () => React$Node = () => {
 
@@ -72,8 +74,8 @@ const App: () => React$Node = () => {
           }}
         />
         <Stack.Screen
-          name="SoundRecorder"
-          component={SoundRecorder}
+          name="SettingsConfirm"
+          component={SettingsConfirm}
           options={{
             title: 'Record your sounds',
           }}
@@ -83,6 +85,20 @@ const App: () => React$Node = () => {
           component={Game}
           options={{
             title: 'Club 100',
+          }}
+        />
+        <Stack.Screen
+          name="About"
+          component={About}
+          options={{
+            title: 'About',
+          }}
+        />
+        <Stack.Screen
+          name="HowToPlay"
+          component={HowToPlay}
+          options={{
+            title: 'How to play',
           }}
         />
 

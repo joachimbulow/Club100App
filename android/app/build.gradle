@@ -153,6 +153,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('club100key.keystore')
+            storePassword 'club100keypassword'
+            keyAlias 'club100keypasswordalias'
+            keyPassword 'club100keypassword'
+        }
     }
     buildTypes {
         debug {

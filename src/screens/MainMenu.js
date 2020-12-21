@@ -11,12 +11,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import authHandler from '../utils/authenticationHandler.js'
 
-
-import { Player } from '@react-native-community/audio-toolkit';
-
 function MainMenu(props) {
-
-    const notificationPlayerRef = useRef(new Player("../assets/soundfiles/example.mp3", { autoDestroy: false, mixWithOthers: true }))
 
     return (
         <>
@@ -39,12 +34,12 @@ function MainMenu(props) {
                             Play
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => notificationPlayerRef.current.play()}>
+                    <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('HowToPlay')}>
                         <Text style={styles.buttonText}>
                             How to play
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('About')}>
                         <Text style={styles.buttonText}>
                             About
                         </Text>
