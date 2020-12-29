@@ -34,9 +34,12 @@ function SettingsConfirm(props) {
                                     })
                             }
                             else {
-                                alert("You need an active playback for the app to take control. Switch to Spotify and start listening to a song, to begin.")
+                                alert("You need Spotify Premium to make use of this application")
                             }
                         })
+                }
+                else {
+                    alert("You need an active playback for the app to take control. Switch to Spotify and start listening to a song, to begin.")
                 }
             })
     }
