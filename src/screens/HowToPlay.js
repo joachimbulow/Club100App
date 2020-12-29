@@ -34,6 +34,7 @@ function HowToPlay(props) {
                     <View style={styles.stepTextView}>
                         <Text style={styles.stepText}>
                             2. Choose your music and settings by navigating through the wizard.
+                            If you enable minefield, there's a small chance each round that a bomb goes off. If you hear the explosion, you must drink a liquor shot or triple the beer shots this round. 
                     </Text>
                     </View>
                     <View style={styles.stepTextView}>
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
-        marginBottom: 15
+        marginBottom: 0
     },
     stepTextView: {
         justifyContent: 'center',
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     },
     stepText: {
         textAlign: "center",
-        fontSize: 18,
-        marginTop: 25,
+        fontSize: 17,
+        marginTop: 10,
         fontWeight: 'bold',
         fontFamily: 'sans-serif-medium'
     },

@@ -23,10 +23,11 @@ function Game(props) {
 
     //Animation
     const animationRef = useRef(null)
+    const mineRef = useRef(null)
     const [showAnimation, setShowAnimation] = useState(false)
+    const [showMineAnimation, setShowMineAnimation] = useState(false)
 
     const roundTimeRef = useRef(props.route.params.difficulty);
-    const minefieldRef = useRef(props.route.params.minefield);
     const shuffleMusicRef = useRef(props.route.params.shuffleMusic);
     const playlistRef = useRef([]);
 
@@ -41,6 +42,7 @@ function Game(props) {
     let beerConsumed = (round * 2) - 2;
 
     var notificationSound = useRef(undefined);
+    var mineSound = useRef(undefined);
 
     useEffect(() => {
         //ComponentDidMount
@@ -49,6 +51,9 @@ function Game(props) {
         Sound.setCategory('Playback');
         notificationSound.current = new Sound('notification.mp3', Sound.MAIN_BUNDLE, (error) => {
             if (error) { console.log('Error loading notification sound'); return; }
+        });
+        mineSound.current = new Sound('mine_sound.mp3', Sound.MAIN_BUNDLE, (error) => {
+            if (error) { console.log('Error loading mine sound'); return; }
         });
 
         initializeGame();
@@ -76,13 +81,21 @@ function Game(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
-            setShowAnimation(true)
-            BackgroundTimer.setTimeout(() => { setShowAnimation(false); }, 3500)
-            BackgroundTimer.setTimeout(() => { spotifyQueueAndPlayNextSong(); }, 2000)
+            if (props.route.params.minefield && Math.random() < 0.05) {
+                setShowMineAnimation(true)
+                BackgroundTimer.setTimeout(() => { setShowMineAnimation(false); }, 5500)
+                BackgroundTimer.setTimeout(() => { spotifyQueueAndPlayNextSong(); }, 5000)
+                BackgroundTimer.setTimeout(() => { mineSound.current.play(() => { }); }, 350)
+            }
+            else {
+                setShowAnimation(true)
+                BackgroundTimer.setTimeout(() => { setShowAnimation(false); }, 3500)
+                BackgroundTimer.setTimeout(() => { spotifyQueueAndPlayNextSong(); }, 2000)
+                notificationSound.current.play(() => { })
+            }
 
             setTimeLeft(props.route.params.difficulty)
             setRound(currentRound => currentRound + 1)
-            notificationSound.current.play(() => { })
 
         }
 
@@ -127,8 +140,6 @@ function Game(props) {
     function gameStep() {
         setTimeLeft((currentTimeLeft) => currentTimeLeft - 1)
     }
-
-
 
     return (
         <>
@@ -185,6 +196,17 @@ function Game(props) {
                             animationRef.current = animation;
                         }}
                         source={require('../assets/animations/6197-beer-mug.json')}
+                        style={{ zIndex: 1000 }}
+                        autoPlay
+                    />
+                </View>}
+            {showMineAnimation &&
+                <View style={styles.animationView}>
+                    <LottieView
+                        ref={animation => {
+                            mineRef.current = animation;
+                        }}
+                        source={require('../assets/animations/9804-dynamite.json')}
                         style={{ zIndex: 1000 }}
                         autoPlay
                     />
