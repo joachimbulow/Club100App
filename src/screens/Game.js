@@ -21,8 +21,13 @@ import authHandler from '../utils/authenticationHandler';
 import spotifyRequestHandler from '../utils/spotifyRequestHandler';
 import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
+import LottieView from 'lottie-react-native';
 
 function Game(props) {
+
+    //Animation
+    const animationRef = useRef(null)
+    const [showAnimation, setShowAnimation] = useState(false)
 
     const roundTimeRef = useRef(props.route.params.difficulty);
     const minefieldRef = useRef(props.route.params.minefield);
@@ -40,7 +45,6 @@ function Game(props) {
     let beerConsumed = (round * 2) - 2;
 
     var notificationSound = useRef(undefined);
-
 
     useEffect(() => {
         //ComponentDidMount
@@ -74,10 +78,14 @@ function Game(props) {
 
     useEffect(() => {
         if (timeLeft <= 0) {
+            setShowAnimation(true)
+            BackgroundTimer.setTimeout(() => { setShowAnimation(false) }, 3500)
+
             setTimeLeft(props.route.params.difficulty)
             setRound(currentRound => currentRound + 1)
             spotifyQueueAndPlayNextSong();
             notificationSound.current.play((success) => { })
+
         }
 
     }, [timeLeft]);
@@ -114,7 +122,7 @@ function Game(props) {
     function startInterval() {
         BackgroundTimer.runBackgroundTimer(() => {
             gameStep()
-        }, 1000)
+        }, 950)
     }
 
     function gameStep() {
@@ -125,6 +133,7 @@ function Game(props) {
 
     return (
         <>
+
             <SafeAreaView style={styles.container}>
                 <View style={styles.imageView}>
                     <Image
@@ -161,6 +170,20 @@ function Game(props) {
                     </TextTicker>
                 </View>
             </SafeAreaView>
+
+            {/* Animation */}
+            {showAnimation &&
+                <View style={styles.animationView}>
+                    <LottieView
+                        ref={animation => {
+                            animationRef.current = animation;
+                        }}
+                        source={require('../assets/animations/6197-beer-mug.json')}
+                        style={{ zIndex: 1000 }}
+                        autoPlay
+                    />
+                </View>}
+            {/* Loading */}
             {loading && <View style={styles.loading}>
                 <Text style={styles.activityIndicatorText}>Initializing game, please wait...</Text>
                 <ActivityIndicator size='large' />
@@ -174,6 +197,18 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFCC00",
     },
+    animationView: {
+        position: 'absolute',
+        backgroundColor: '#F5FCFF88',
+        flex: 1,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
     imageView: {
         justifyContent: 'center',
         alignItems: 'center',

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
     StyleSheet,
     Text,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 //import { Image } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import authHandler from '../utils/authenticationHandler.js'
+
 
 function MainMenu(props) {
 
@@ -28,6 +28,7 @@ function MainMenu(props) {
                         PlaceholderContent={<ActivityIndicator />}
                     />
                 </View>
+
                 <View style={styles.buttonView}>
                     <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('Authorization')}>
                         <Text style={styles.buttonText}>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     headerView: {
-        flex: 0.1,
+        flex: 0.1
     },
     mainMenuHeader: {
         textAlign: "center",
