@@ -10,6 +10,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js';
 import LottieView from 'lottie-react-native';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 function SettingsConfirm(props) {
 
@@ -42,6 +43,7 @@ function SettingsConfirm(props) {
     return (
         <>
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.imageView}>
                     <Image
                         source={require('../assets/beer.png')}

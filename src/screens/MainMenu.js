@@ -5,17 +5,22 @@ import {
     SafeAreaView,
     View,
     ActivityIndicator,
-    Image
+    Image,
+    Dimensions
 } from "react-native";
 //import { Image } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LottieView from 'lottie-react-native';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 function MainMenu(props) {
+
+    const deviceWidth = Dimensions.get('window').width;
 
     return (
         <>
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.headerView}>
                     <Text style={styles.mainMenuHeader}>
                         Welcome to Club 100
@@ -48,10 +53,12 @@ function MainMenu(props) {
                 </View>
                 <LottieView
                     source={require('../assets/animations/background_animation.json')}
-                    style={{ zIndex: -1 }}
+                    style={{ zIndex: -2 }}
                     autoPlay={true}
                     loop={true}
                 />
+                
+
 
             </SafeAreaView>
 

@@ -41,6 +41,11 @@ class SpotifyRequestHandler {
         return axios.post('https://api.spotify.com/v1/me/player/queue?uri=' + songUri, {}, { headers: { "Authorization": "Bearer " + tokenObject.accessToken } })
     }
 
+    async seekCurrentSong(millis) {
+        let tokenObject = await this.retrieveValidatedAccessToken();
+        return axios.put('https://api.spotify.com/v1/me/player/seek?position_ms=' + millis, {}, { headers: { "Authorization": "Bearer " + tokenObject.accessToken } })
+    }
+
     async getActivePlayback() {
         let tokenObject = await this.retrieveValidatedAccessToken();
         return axios.get('https://api.spotify.com/v1/me/player', { headers: { "Authorization": "Bearer " + tokenObject.accessToken } })

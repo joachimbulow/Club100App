@@ -11,6 +11,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js'
 import LottieView from 'lottie-react-native';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 function PlaylistPicker(props) {
 
@@ -36,6 +37,7 @@ function PlaylistPicker(props) {
     return (
         <>
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.imageView}>
                     <Image
                         source={require('../assets/beer.png')}
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         padding: 10,
         borderRadius: 25,
-        backgroundColor: "rgba(255,255,255,0.3)",
+        backgroundColor: "rgba(255,255,255,0.5)",
         borderWidth: 2,
     },
     ActivityIndicatorView: {

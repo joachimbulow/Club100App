@@ -16,6 +16,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
 import LottieView from 'lottie-react-native';
 import KeepAwake from 'react-native-keep-awake';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 
 function Game(props) {
@@ -76,12 +77,12 @@ function Game(props) {
     useEffect(() => {
         if (timeLeft <= 0) {
             setShowAnimation(true)
-            BackgroundTimer.setTimeout(() => { setShowAnimation(false) }, 3500)
+            BackgroundTimer.setTimeout(() => { setShowAnimation(false); }, 3500)
+            BackgroundTimer.setTimeout(() => { spotifyQueueAndPlayNextSong(); }, 2000)
 
             setTimeLeft(props.route.params.difficulty)
             setRound(currentRound => currentRound + 1)
-            spotifyQueueAndPlayNextSong();
-            notificationSound.current.play((success) => { })
+            notificationSound.current.play(() => { })
 
         }
 
@@ -106,6 +107,7 @@ function Game(props) {
     async function spotifyQueueAndPlayNextSong() {
         await spotifyRequestHandler.queueSong(playlistRef.current[upcomingSongIndexRef.current].track.uri);
         await spotifyRequestHandler.playNextSong();
+        spotifyRequestHandler.seekCurrentSong(30000);
         setCurrentlyPlayingWithFormat((upcomingSongIndexRef.current) % playlistRef.current.length);
 
         // Incrementing index of next song
@@ -132,6 +134,7 @@ function Game(props) {
         <>
 
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.imageView}>
                     <Image
                         source={require('../assets/beer.png')}

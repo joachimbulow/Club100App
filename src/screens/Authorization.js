@@ -12,6 +12,7 @@ import authHandler from '../utils/authenticationHandler.js'
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LottieView from 'lottie-react-native';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 function Authorization(props) {
 
@@ -39,6 +40,7 @@ function Authorization(props) {
     return (
         <>
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.headerView}>
                     <Text style={styles.header}>
                         Authorize your account

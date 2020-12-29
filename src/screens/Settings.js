@@ -11,6 +11,7 @@ import {
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LottieView from 'lottie-react-native';
+import BeerFoam from '../components/beerFoamImageComponent.js'
 
 function Settings(props) {
     const [playlistUri] = useState(props.route.params.playlistUri);
@@ -24,6 +25,7 @@ function Settings(props) {
     return (
         <>
             <SafeAreaView style={styles.container}>
+                <BeerFoam></BeerFoam>
                 <View style={styles.imageView}>
                     <Image
                         source={require('../assets/beer.png')}
