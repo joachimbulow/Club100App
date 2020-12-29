@@ -23,6 +23,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
 import LottieView from 'lottie-react-native';
 
+
 function Game(props) {
 
     //Animation
@@ -169,6 +170,12 @@ function Game(props) {
                         {currentlyPlaying}
                     </TextTicker>
                 </View>
+                <LottieView
+                    source={require('../assets/animations/background_animation.json')}
+                    style={{ zIndex: -1 }}
+                    autoPlay={true}
+                    loop={true}
+                />
             </SafeAreaView>
 
             {/* Animation */}

@@ -14,6 +14,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import RecordAndPlayButton from '../components/RecordAndPlayButton.js'
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js';
+import LottieView from 'lottie-react-native';
 
 function SettingsConfirm(props) {
 
@@ -75,6 +76,12 @@ function SettingsConfirm(props) {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                <LottieView
+                    source={require('../assets/animations/background_animation.json')}
+                    style={{ zIndex: -1 }}
+                    autoPlay={true}
+                    loop={true}
+                />
 
             </SafeAreaView>
         </>

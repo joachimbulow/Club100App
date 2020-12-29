@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import LottieView from 'lottie-react-native';
 
 function Settings(props) {
     const [playlistUri] = useState(props.route.params.playlistUri);
@@ -121,6 +122,12 @@ function Settings(props) {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                <LottieView
+                    source={require('../assets/animations/background_animation.json')}
+                    style={{ zIndex: -1 }}
+                    autoPlay={true}
+                    loop={true}
+                />
 
             </SafeAreaView>
         </>

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 //import { Image } from 'react-native-elements';
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import LottieView from 'lottie-react-native';
 
 function MainMenu(props) {
 
@@ -46,9 +46,15 @@ function MainMenu(props) {
                         </Text>
                     </TouchableOpacity>
                 </View>
-
+                <LottieView
+                    source={require('../assets/animations/background_animation.json')}
+                    style={{ zIndex: -1 }}
+                    autoPlay={true}
+                    loop={true}
+                />
 
             </SafeAreaView>
+
 
         </>
     )
