@@ -16,6 +16,8 @@ target 'Club100' do
 
   pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
 
+  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
+
   target 'Club100Tests' do
     inherit! :complete
     # Pods for testing

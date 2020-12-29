@@ -15,6 +15,7 @@ import spotifyRequestHandler from '../utils/spotifyRequestHandler';
 import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';
 import LottieView from 'lottie-react-native';
+import KeepAwake from 'react-native-keep-awake';
 
 
 function Game(props) {
@@ -50,6 +51,7 @@ function Game(props) {
         });
 
         initializeGame();
+        KeepAwake.activate();
         props.navigation.setOptions({
             headerLeft: () => (
                 <Button onPress={() => {
@@ -67,6 +69,7 @@ function Game(props) {
         return () => {
             BackgroundTimer.stopBackgroundTimer();
             notificationSound.current.release();
+            KeepAwake.deactivate();
         }
     }, [])
 
