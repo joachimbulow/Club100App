@@ -3,11 +3,8 @@ import {
     StyleSheet,
     Text,
     SafeAreaView,
-    ScrollView,
     View,
-    Linking,
     TouchableOpacity,
-    RefreshControl,
     ActivityIndicator,
     Image
 } from 'react-native'

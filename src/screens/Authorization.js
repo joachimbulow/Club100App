@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import authHandler from '../utils/authenticationHandler.js'
-import storageHandler from '../utils/asyncStorageHandler.js'
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LottieView from 'lottie-react-native';

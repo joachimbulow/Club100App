@@ -4,20 +4,13 @@ import {
     Text,
     SafeAreaView,
     Button,
-    ScrollView,
     View,
-    Linking,
-    TouchableHighlight,
-    RefreshControl,
     ActivityIndicator,
-    Dimensions,
     Image,
     Alert
 } from 'react-native'
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import TextTicker from 'react-native-text-ticker';
-import authHandler from '../utils/authenticationHandler';
 import spotifyRequestHandler from '../utils/spotifyRequestHandler';
 import BackgroundTimer from 'react-native-background-timer';
 import Sound from 'react-native-sound';

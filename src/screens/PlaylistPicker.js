@@ -5,14 +5,10 @@ import {
     SafeAreaView,
     ScrollView,
     View,
-    Linking,
-    TouchableHighlight,
-    RefreshControl,
     ActivityIndicator,
     Image
 } from 'react-native'
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Input } from 'react-native-elements';
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js'
 import LottieView from 'lottie-react-native';
 
