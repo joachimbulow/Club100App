@@ -17,7 +17,7 @@ function BeerFoamImageComponent(props) {
             <View style={styles.beerFoamImageView}>
                 <Image
                     source={require('../assets/beerfoam.png')}
-                    style={{ height: 300, width: deviceWidth }}
+                    style={{ height: 220, width: deviceWidth }}
                     PlaceholderContent={<ActivityIndicator />}
                 />
             </View>
