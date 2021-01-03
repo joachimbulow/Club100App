@@ -1,6 +1,6 @@
 import { authorize, refresh } from 'react-native-app-auth';
 import asyncStorageHandler from './asyncStorageHandler.js';
-import { CLIENT_SECRET } from '../constants.js'
+import { CLIENT_SECRET, PYTHON_REST_URL } from '../constants.js'
 import axios from 'axios'
 
 class AuthenticationHandler {
@@ -25,11 +25,13 @@ class AuthenticationHandler {
         };
     }
 
+    // Methods
+
     async onLogin() {
         try {
-            const result = await authorize(this.spotifyAuthConfig);
-            if (result.authorizationCode) {
-                let tokenResult = await axios.get('http://10.0.2.2:8000/authorizespotify/' + result.authorizationCode)
+            const codeResult = await authorize(this.spotifyAuthConfig);
+            if (codeResult.authorizationCode) {
+                let tokenResult = await axios.get(PYTHON_REST_URL + '/authorizespotify/' + codeResult.authorizationCode)
                 //Set token expiration date time
                 tokenResult.data.tokenExpirationDate = Date.now() + (tokenResult.data.expires_in * 1000);
                 await asyncStorageHandler.storeObject('tokenObject', tokenResult.data);
@@ -44,11 +46,6 @@ class AuthenticationHandler {
         }
     }
 
-    async refreshLogin(tokenObject) {
-
-        return result;
-    }
-
     //Token handling 
     async retrieveValidatedAccessTokenObject() {
         let tokenObject = await asyncStorageHandler.retrieveObject("tokenObject")
@@ -58,7 +55,7 @@ class AuthenticationHandler {
     async refreshAccessTokenIfNecessary(tokenObject) {
         if (tokenObject.tokenExpirationDate <= Date.now()) {
             console.log("Refreshing token")
-            const refreshResult = await axios.get("http://10.0.2.2:8000/refreshspotifytoken/" + tokenObject.refresh_token)
+            const refreshResult = await axios.get(PYTHON_REST_URL + "/refreshspotifytoken/" + tokenObject.refresh_token)
             tokenObject.access_token = refreshResult.data.access_token
             tokenObject.tokenExpirationDate = Date.now() + (refreshResult.data.expires_in * 1000);
             asyncStorageHandler.storeObject("tokenObject", tokenObject)

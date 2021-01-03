@@ -182,7 +182,7 @@ function Game(props) {
                 </View>
                 <LottieView
                     source={require('../assets/animations/background_animation.json')}
-                    style={{ zIndex: -1 }}
+                    style={{ zIndex: -2 }}
                     autoPlay={true}
                     loop={true}
                 />

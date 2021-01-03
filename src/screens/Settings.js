@@ -6,7 +6,8 @@ import {
     View,
     TouchableOpacity,
     ActivityIndicator,
-    Image
+    Image,
+    Alert
 } from 'react-native'
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -36,7 +37,7 @@ function Settings(props) {
                 </View>
                 <View style={styles.checkboxContainerView}>
 
-                    <Text style={styles.settingTextStyle}>Difficulty (seconds per shot)?</Text>
+                    <Text style={styles.settingTextStyle}>Difficulty (seconds per shot)</Text>
                     <View style={styles.checkboxView}>
                         <CheckBox
                             center
@@ -68,8 +69,12 @@ function Settings(props) {
                         />
                     </View>
 
-
-                    <Text style={styles.settingTextStyle}>Minefield?</Text>
+                    <View style={styles.minefieldTextView}>
+                        <Text style={styles.settingTextStyle}>Minefield</Text>
+                        <TouchableOpacity style={styles.popupDialogButton} onPress={() => Alert.alert('Minefield', "If you enable minefield, every round there is a small chance (4%) that a bomb animation will be shown, and an explosion sound. In that case, it is recommended to drink a shot of liquor instead of beer, but the \"punishment\" can be decided by the players.")}>
+                            <Text style={styles.settingTextStyle}>?</Text>
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.difficultyCheckboxView}>
                         <CheckBox
                             center
@@ -88,7 +93,7 @@ function Settings(props) {
                             checkedIcon={<Icon name="beer" size={24} color="black" />}
                         />
                     </View>
-                    <Text style={styles.settingTextStyle}>Shuffle music?</Text>
+                    <Text style={styles.settingTextStyle}>Shuffle music</Text>
                     <View style={styles.checkboxView}>
                         <CheckBox
                             center
@@ -183,6 +188,17 @@ const styles = StyleSheet.create({
     buttonView: {
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    minefieldTextView: {
+        flexDirection: 'row'
+    },
+    popupDialogButton: {
+        backgroundColor: "rgba(255,255,255,0.5)",
+        paddingHorizontal: 10,
+        marginLeft: 10,
+        borderRadius: 20,
+        borderStyle: 'solid',
+        borderWidth: 1,
     }
 
 })

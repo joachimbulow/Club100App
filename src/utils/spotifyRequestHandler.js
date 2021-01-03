@@ -1,6 +1,5 @@
 import axios from 'axios'
 import authHandler from './authenticationHandler.js'
-import asyncStorageHandler from './asyncStorageHandler'
 
 class SpotifyRequestHandler {
     constructor() { }
