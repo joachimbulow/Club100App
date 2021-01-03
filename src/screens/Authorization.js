@@ -21,16 +21,15 @@ function Authorization(props) {
 
     async function authorizeAccount() {
         if (await authHandler.onLogin()) {
-            spotifyRequestHandler.getUserDisplayName()
-                .then(response => {
-                    if (response.data.display_name) {
-                        setTokenUserDisplayName(response.data.display_name);
-                    }
-                    else {
-                        setTokenUserDisplayName("*no display name found*");
-                    }
-                    setHasToken(true);
-                })
+            let response = await spotifyRequestHandler.getUserDisplayName()
+            if (response.data.display_name) {
+                setTokenUserDisplayName(response.data.display_name);
+            }
+            else {
+                setTokenUserDisplayName("*no display name found*");
+            }
+            setHasToken(true);
+
         }
         else {
             alert("Something went wrong during authorization. Try again.")

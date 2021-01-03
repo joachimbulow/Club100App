@@ -72,7 +72,7 @@ function SettingsConfirm(props) {
                 <View style={styles.buttonView}>
                     <TouchableOpacity style={styles.button} onPress={() => navigateWithActivePlaybackCheck()}>
                         <Text style={styles.buttonText}>
-                            Continue
+                            Start game
                         </Text>
                     </TouchableOpacity>
                 </View>

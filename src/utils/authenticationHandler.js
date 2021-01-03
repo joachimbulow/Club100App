@@ -1,6 +1,7 @@
 import { authorize, refresh } from 'react-native-app-auth';
 import asyncStorageHandler from './asyncStorageHandler.js';
-import { CLIENT_SECRET } from '../constants.js'
+import { CLIENT_SECRET, PYTHON_REST_URL } from '../constants.js'
+import axios from 'axios'
 
 class AuthenticationHandler {
     constructor() {
@@ -15,21 +16,25 @@ class AuthenticationHandler {
                 'user-modify-playback-state',
                 'user-read-private',
             ],
+            usePKCE: false,
             serviceConfiguration: {
                 authorizationEndpoint: 'https://accounts.spotify.com/authorize',
                 tokenEndpoint: 'https://accounts.spotify.com/api/token',
             },
-            skipCodeExchange: false
+            skipCodeExchange: true
         };
     }
 
+    // Methods
+
     async onLogin() {
         try {
-            const result = await authorize(this.spotifyAuthConfig);
-            console.log(result)
-            if (result.accessToken) {
-                console.log(result.accessToken)
-                await asyncStorageHandler.storeObject('tokenObject', result);
+            const codeResult = await authorize(this.spotifyAuthConfig);
+            if (codeResult.authorizationCode) {
+                let tokenResult = await axios.get(PYTHON_REST_URL + '/authorizespotify/' + codeResult.authorizationCode)
+                //Set token expiration date time
+                tokenResult.data.tokenExpirationDate = Date.now() + (tokenResult.data.expires_in * 1000);
+                await asyncStorageHandler.storeObject('tokenObject', tokenResult.data);
                 return true;
             }
             else {
@@ -37,16 +42,26 @@ class AuthenticationHandler {
             }
 
         } catch (error) {
-            console.log("Exception in authorization. " + error)
             return false;
         }
     }
 
-    async refreshLogin(refreshToken) {
-        const result = await refresh(this.spotifyAuthConfig, {
-            refreshToken: refreshToken,
-        });
-        return result;
+    //Token handling 
+    async retrieveValidatedAccessTokenObject() {
+        let tokenObject = await asyncStorageHandler.retrieveObject("tokenObject")
+        return await this.refreshAccessTokenIfNecessary(tokenObject);
+    }
+
+    async refreshAccessTokenIfNecessary(tokenObject) {
+        if (tokenObject.tokenExpirationDate <= Date.now()) {
+            console.log("Refreshing token")
+            const refreshResult = await axios.get(PYTHON_REST_URL + "/refreshspotifytoken/" + tokenObject.refresh_token)
+            tokenObject.access_token = refreshResult.data.access_token
+            tokenObject.tokenExpirationDate = Date.now() + (refreshResult.data.expires_in * 1000);
+            asyncStorageHandler.storeObject("tokenObject", tokenObject)
+            return tokenObject
+        }
+        return tokenObject
     }
 
 
