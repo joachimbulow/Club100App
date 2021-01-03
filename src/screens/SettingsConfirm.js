@@ -5,7 +5,8 @@ import {
     SafeAreaView,
     View,
     ActivityIndicator,
-    Image
+    Image,
+    Alert
 } from 'react-native'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import spotifyRequestHandler from '../utils/spotifyRequestHandler.js';
@@ -30,12 +31,12 @@ function SettingsConfirm(props) {
                                     })
                             }
                             else {
-                                alert("You need Spotify Premium to make use of this application")
+                                alert("You need Spotify Premium to make use of this application, sorry!")
                             }
                         })
                 }
                 else {
-                    alert("You need an active playback for the app to take control. Switch to Spotify and start listening to a song, to begin.")
+                    Alert.alert("Listen on Spotify to begin", "You need an active playback for the app to take control. Switch to Spotify and start listening to a song (or switch song once), to begin.")
                 }
             })
     }
