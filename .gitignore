@@ -60,3 +60,4 @@ buck-out/
 
 # Custom
 /src/constants.js
+/android/gradle.properties
